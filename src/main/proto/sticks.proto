@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package sticks;
+
+option java_package = "ru.sticks.grpc";
+option java_multiple_files = true;
+
+service StickGameService {
+  rpc Join(JoinRequest) returns (JoinResponse);
+  rpc GetState(GetStateRequest) returns (GameStateResponse);
+  rpc MakeMove(MoveRequest) returns (MoveResponse);
+}
+
+message JoinRequest {
+  string name = 1;
+}
+
+message JoinResponse {
+  int32 player_id = 1;
+}
+
+message GetStateRequest {}
+
+message MoveRequest {
+  int32 player_id = 1;
+  string type = 2;
+  int32 row = 3;
+  int32 col = 4;
+
+}
+
+message MoveResponse {
+  string result = 1;
+}
+
+message GameStateResponse {
+  int32 size = 1;
+  repeated bool horizontal = 2;
+  repeated bool vertical = 3;
+  repeated int32 owners = 4;
+  repeated string names = 5;
+  repeated int32 scores = 6;
+  int32 current_player = 7;
+  bool started = 8;
+  bool game_over = 9;
+  int32 version = 10;
+  string message = 11;
+}
